@@ -1,3 +1,4 @@
+import { ToastContainer, toast } from 'react-toastify';
 import { Component } from 'react';
 import { fetchImages } from 'services/images-api';
 
@@ -57,6 +58,7 @@ export class App extends Component {
 
   render() {
     const { imageList, loading, page, totalHits, image } = this.state;
+
     return (
       <>
         <Searchbar formSubmit={this.formSubmit} />
@@ -66,12 +68,16 @@ export class App extends Component {
 
         {loading && <Loader />}
 
-        {imageList.length > 0 && totalHits >= page * 12 && (
+        {imageList.length > 0 && totalHits > page * 12 && (
           <ButtonLoadMore changePage={this.changePage} />
         )}
 
         {}
         {image && <Modal bigPoster={image} hideBigImg={this.hideBigImg} />}
+        <ToastContainer autoClose={3000} />
+        {imageList.length !== 0 &&
+          !(totalHits > page * 12) &&
+          toast.error('You have reached the end of the page')}
       </>
     );
   }
