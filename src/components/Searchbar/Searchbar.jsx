@@ -18,6 +18,7 @@ export class Searchbar extends Component {
       this.setState({ input: '' });
       return;
     }
+
     toast.error(' Enter text to search');
   };
 

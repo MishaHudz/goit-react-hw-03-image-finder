@@ -37,6 +37,14 @@ export class App extends Component {
       imageList:
         prev.imageList.length !== 0 ? [...prev.imageList, ...hits] : hits,
     }));
+
+    if (totalHits === 0) {
+      toast.error('Nothing found');
+    }
+
+    if (totalHits !== 0 && !(totalHits > page * 12)) {
+      toast.error('You have reached the end of the page');
+    }
   };
 
   changePage = () => {
@@ -75,9 +83,6 @@ export class App extends Component {
         {}
         {image && <Modal bigPoster={image} hideBigImg={this.hideBigImg} />}
         <ToastContainer autoClose={3000} />
-        {imageList.length !== 0 &&
-          !(totalHits > page * 12) &&
-          toast.error('You have reached the end of the page')}
       </>
     );
   }
